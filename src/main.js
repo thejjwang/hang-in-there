@@ -102,17 +102,43 @@ var savedPosters = [];
 var currentPoster;
 
 // event listeners go here 👇
+let posterImg = document.querySelector('.poster-img');
+let posterTitle = document.querySelector('.poster-title');
+let posterQuote = document.querySelector('.poster-quote');
 
+let savePoster = document.querySelector('.save-poster');
+let showSaved = document.querySelector('.show-saved');
+let showRandom = document.querySelector('.show-random');
+let showForm = document.querySelector('.show-form');
 // functions and event handlers go here 👇
-// (we've provided two to get you started)!
+window.addEventListener("load", function () {
+  var randomPoster = showRandomPoster();
+  updatePoster(randomPoster);
+});
+showRandom.addEventListener('click', showRandomPoster);
+function showRandomPoster(){
+    let randomIndex = getRandomIndex(images);
+    currentPoster = createPoster(images[randomIndex], titles[randomIndex], quotes[randomIndex]);
+    updatePoster();
+}
 function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
-
 function createPoster(imageURL, title, quote) {
   return {
     id: Date.now(), 
     imageURL: imageURL, 
     title: title, 
     quote: quote}
+}
+function updatePoster(){
+    posterImg.src = currentPoster.imageURL;
+    posterQuote.innerText = currentPoster.quote;
+    posterTitle.innerText = currentPoster.title;
+}
+showForm.addEventListener('click', hideForm);
+// Function to show the form section
+function hideForm() {
+  var posterFormSection = document.querySelector('.poster-form');
+  posterFormSection.classList.remove('hidden');
 }
