@@ -110,6 +110,10 @@ let savePoster = document.querySelector('.save-poster');
 let showSaved = document.querySelector('.show-saved');
 let showRandom = document.querySelector('.show-random');
 let showForm = document.querySelector('.show-form');
+
+let showMyPoster = document.querySelector('.make-poster');
+let showMain = document.querySelector('show-main');
+let back2Main = document.querySelector('back-to-main');
 // functions and event handlers go here 👇
 window.addEventListener("load", function () {
   var randomPoster = showRandomPoster();
@@ -136,9 +140,55 @@ function updatePoster(){
     posterQuote.innerText = currentPoster.quote;
     posterTitle.innerText = currentPoster.title;
 }
-showForm.addEventListener('click', hideForm);
-// Function to show the form section
-function hideForm() {
-  var posterFormSection = document.querySelector('.poster-form');
+showForm.addEventListener('click', showForm1);
+// Function to show the form section and hide the main section
+function showForm1() {
+  let posterFormSection = document.querySelector('.poster-form');
+  let mainPosterSection = document.querySelector('.main-poster');
   posterFormSection.classList.remove('hidden');
+  mainPosterSection.classList.add('hidden');
+}
+//   // to go back to main
+// back2Main.addEventListener('click', takeBack);
+// function takeBack(){
+//   mainPosterSection.classList.remove('hidden');
+//   posterFormSection.classList.add('hidden');
+//   }
+showMyPoster.addEventListener('click', goBack);
+function goBack(){
+  mainPosterSection.classList.remove('hidden');
+  savedPosterSection.classList.add('hidden');
+}
+showSaved.addEventListener('click', showSavedPosters);
+// Function to show the saved posters and hide the main section
+function showSavedPosters (){
+  let mainPosterSection = document.querySelector('.main-poster');
+  let savedPosterSection = document.querySelector('.saved-posters');
+  savedPosterSection.classList.remove('hidden');
+  mainPosterSection.classList.add('hidden');
+
+//   // back to main button goes back to main why doesnt work
+//   showMain.addEventListener('click', backMain);
+//   function backMain(){
+//   mainPosterSection.classList.remove('hidden');
+//   savedPosterSection.classList.add('hidden');
+// }
+}
+// create new object
+function newPoster(image, title, quote){
+  currentPoster = newPoster(image, title, quote);
+  mainImageElement.setAttribute("src", currentPoster.imageURL);
+  mainTitleElement.innerText = currentPoster.title;
+  mainQuoteElement.innerText = currentPoster.quote;
+}
+// save poster
+savePoster.addEventListener('click', posterSaved);
+function posterSaved(){
+  // make sure no duplicate posters are saved
+  let duplicates = 0;
+  for (savePoster of savedPosters) {
+    if (poster.quote === savedPoster.quote && poster.title === savedPoster.title && poster.imageURL === savedPoster.imageURL)
+      console.log('duplicate poster');
+  } 
+  savedPosters.push(currentPoster);
 }
